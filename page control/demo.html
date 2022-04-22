@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../list render/list-render.js"></script>
+    <script src="simple-page-control.js"></script>
+</head>
+
+<body>
+    <div>
+        <ul id="list-container" class="list-group">
+            <li class="list-group-item">?{text} <span>?{grade}</span> <a href="?{src}">?{src}</a> <span
+                    style="color: rebeccapurple;">?{text}</span></li>
+        </ul>
+        <div id="simple-page-control-panel"></div>
+    </div>
+    <script>
+        var datas = [
+            [
+                { text: 'JavaScript', grade: 0, src: "test.test" },
+                { text: 'JavaScript', grade: 0, src: "test.test" },
+                { text: 'JavaScript', grade: 0, src: "test.test" }
+            ],
+            [
+                { text: 'JavaScript', grade: 1, src: "test.test" },
+                { text: 'JavaScript', grade: 1, src: "test.test" },
+                { text: 'JavaScript', grade: 1, src: "test.test" }
+            ],
+            [
+                { text: 'JavaScript', grade: 2, src: "test.test" },
+                { text: 'JavaScript', grade: 2, src: "test.test" },
+                { text: 'JavaScript', grade: 2, src: "test.test" }
+            ]
+        ];
+        var listRender = new ForListRender("list-container");
+        console.log(listRender);
+        listRender.RenderList(datas[0]);
+        var pageChange = function (pageIndex) {
+            console.log(datas[pageIndex - 1]);
+            listRender.RenderList(datas[pageIndex - 1]);
+        }
+        var pageControl = new SimplePageControl(10, 1, pageChange);
+        pageControl.Render();
+    </script>
+</body>
+
+</html>
