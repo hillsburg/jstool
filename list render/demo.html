@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="list-render.js"></script>
+</head>
+
+<body>
+    <div>
+        <ul id="list-container">
+            <li>?{text} <span>?{grade}</span> <a href="?{src}">?{src}</a> <span style="color: rebeccapurple;">?{text}</span></li>
+        </ul>
+    </div>
+    <script>
+        var datas = [
+            { text: 'JavaScript', grade: 0, src: "test.test" },
+            { text: 'JavaScript', grade: 0, src: "test.test" },
+            { text: 'JavaScript', grade: 0, src: "test.test" },
+        ];
+        RenderList("list-container", datas);
+    </script>
+</body>
+
+</html>
