@@ -8,17 +8,19 @@
 <body>
     <div>
         <ul id="list-container">
-            <li>?{text} <span>?{grade}</span> <a href="?{src}">?{src}</a> <span style="color: rebeccapurple;">?{text}</span></li>
+            <li>?{src} ?{text} <span>?{grade}</span> <a href="?{src}">?{src}</a> <span style="color: rebeccapurple;">?{text}</span></li>
         </ul>
     </div>
     <script>
+        //数据
         var datas = [
             { text: 'JavaScript', grade: 0, src: "test.test" },
             { text: 'JavaScript', grade: 0, src: "test.test" },
             { text: 'JavaScript', grade: 0, src: "test.test" },
         ];
-        RenderList("list-container", datas);
+        //新建一个列表渲染器
+        var render = new ForListRender("list-container");
+        render.RenderList(datas);
     </script>
 </body>
-
 </html>

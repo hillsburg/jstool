@@ -4,15 +4,21 @@ class ForListRender {
     fieldValDic = {};
     //This dic is used to store index -- ?{fieldName}, because one field may appear more than once
     replaceDic = {};
-    /*原始模板*/
+    //原始模板
     rowTemplate = '';
-    /*template container id */
+
+    //template container id
     templateContainerId = '';
 
+    //列表的容器对象
     listContainer;
-    //cctor
+
+    /**
+     * constructor
+     * @param pContainerId
+     */
     constructor(pContainerId) {
-        var container = document.getElementById(pContainerId);
+        let container = document.getElementById(pContainerId);
         this.listContainer = container;
         this.rowTemplate = container.innerHTML;
     }
@@ -34,17 +40,17 @@ class ForListRender {
     RenderList(datas) {
         var _that = this;
         //container.innerHTML = "";
-        var index = 0;
+        let index = 0;
         for (let j = 0; j < _that.rowTemplate.length; j++) {
             if (_that.rowTemplate.charAt(j) == '?' && _that.rowTemplate.charAt(j + 1) == '{') {
-                var k = j + 2;
+                let k = j + 2;
                 while (_that.rowTemplate.charAt(k) != '}') {
                     k++;
                 }
                 if (k < _that.rowTemplate.length) {
-                    var fieldName = _that.rowTemplate.substring(j + 2, k);
-                    var b = '';
-                    var replace = "?{" + fieldName + "}";
+                    let fieldName = _that.rowTemplate.substring(j + 2, k);
+                    let b = '';
+                    let replace = "?{" + fieldName + "}";
                     _that.setFieldValDic(replace, fieldName);
                     _that.setReplaceDic(index, replace);
                     index++;

@@ -11,8 +11,7 @@
 <body>
     <div>
         <ul id="list-container" class="list-group">
-            <li class="list-group-item">?{text} <span>?{grade}</span> <a href="?{src}">?{src}</a> <span
-                    style="color: rebeccapurple;">?{text}</span></li>
+            <li class="list-group-item">?{text} <span>?{grade}</span> <a href="?{src}">?{src}</a> <span style="color: rebeccapurple;">?{text}</span></li>
         </ul>
         <div id="simple-page-control-panel"></div>
     </div>
@@ -37,10 +36,12 @@
         var listRender = new ForListRender("list-container");
         console.log(listRender);
         listRender.RenderList(datas[0]);
+        //页码改变委托，在分页控件中被调用
         var pageChange = function (pageIndex) {
             console.log(datas[pageIndex - 1]);
             listRender.RenderList(datas[pageIndex - 1]);
         }
+        //实例化控件
         var pageControl = new SimplePageControl(10, 1, pageChange);
         pageControl.Render();
     </script>
