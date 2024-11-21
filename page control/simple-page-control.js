@@ -35,15 +35,7 @@
         btnFirstPage.className = "btnFirstPage btn btn-secondary";
         btnFirstPage.onclick = function () {
             console.log("首页按下");
-            if (_that.currentPage == 1)
-                return;
-            var ele = document.getElementsByClassName("simple-page-control-pageBtns");
-            for (let i = 0; i < ele.length; i++) {
-                ele[i].innerHTML = i + 1;
-            }
-            _that.currentPage = 1;
-            _that.ChangeColor();
-            _that.customClickEvent(_that.currentPage);
+            _that.RenderBtns(1);
         }
         panel.appendChild(btnFirstPage);
 
@@ -52,19 +44,7 @@
         btnPrePage.innerHTML = "上一页";
         btnPrePage.onclick = function () {
             console.log("上一页按下");
-            if (_that.currentPage == 1) {
-                return;
-            }
-            else {
-                var ele = document.getElementsByClassName("simple-page-control-pageBtns");
-                for (let i = 0; i < ele.length; i++) {
-                    if (parseInt(ele[i].innerHTML) == _that.currentPage - 1) {
-                        ele[i].click();
-                        break;
-                    }
-                }
-                _that.ChangeColor();
-            }
+            _that.RenderBtns(_that.currentPage - 1);
         }
         panel.appendChild(btnPrePage);
 
@@ -73,51 +53,8 @@
             btn.innerHTML = i + 1;
             btn.className = "simple-page-control-pageBtns btn btn-secondary";
             btn.onclick = function () {
-                if (_that.currentPage == this.innerHTML) {
-                    return;
-                }
-                var ele = document.getElementsByClassName("simple-page-control-pageBtns");
                 var currentPageNum = parseInt(this.innerHTML);
-                var middlePageNum = parseInt(ele[Math.floor(_that.realBtnCnt / 2)].innerHTML);
-                var firstPageBtnNum = parseInt(ele[0].innerHTML);
-                var lastPageBtnNum = parseInt(ele[_that.realBtnCnt - 1].innerHTML);
-                var gap = Math.abs(parseInt(this.innerHTML) - parseInt(ele[Math.floor(_that.realBtnCnt / 2)].innerHTML));
-
-                var gap1 = parseInt(_that.totalPage) - parseInt(ele[_that.realBtnCnt - 1].innerHTML);
-                var gap2 = parseInt(ele[0].innerHTML) - 1;
-                if (currentPageNum < middlePageNum) {//右移
-                    if (firstPageBtnNum != 1) {
-                        if (gap <= gap2) {
-                            for (let i = 0; i < ele.length; i++) {
-                                ele[i].innerHTML = parseInt(ele[i].innerHTML - gap);
-                            }
-                        }
-                        else {
-                            for (let i = 0; i < ele.length; i++) {
-                                ele[i].innerHTML = i + 1;
-                            }
-                        }
-                    }
-                }
-                if (currentPageNum > middlePageNum)//左移
-                {
-                    if (lastPageBtnNum != _that.totalPage) {
-                        if (gap <= gap1) {
-                            for (let i = 0; i < ele.length; i++) {
-                                ele[i].innerHTML = gap + parseInt(ele[i].innerHTML);
-                            }
-                        }
-
-                        else {
-                            for (let i = 0; i < _that.realBtnCnt; i++) {
-                                ele[i].innerHTML = _that.totalPage - _that.realBtnCnt + i + 1;
-                            }
-                        }
-                    }
-                }
-                _that.currentPage = currentPageNum;
-                _that.ChangeColor();
-                _that.customClickEvent(_that.currentPage);
+                _that.RenderBtns(currentPageNum);
             }
             //console.log(_that.pageBtns);
             _that.pageBtns.push(btn);
@@ -128,19 +65,7 @@
         btnNextPage.innerHTML = "下一页";
         btnNextPage.className = "btnNextPage btn btn-secondary";
         btnNextPage.onclick = function () {
-            if (_that.currentPage == _that.totalPage) {
-                return;
-            }
-            else {
-                var ele = document.getElementsByClassName("simple-page-control-pageBtns");
-                for (let i = 0; i < ele.length; i++) {
-                    if (parseInt(ele[i].innerHTML) == parseInt(_that.currentPage) + 1) {
-                        ele[i].click();
-                        break;
-                    }
-                }
-                _that.ChangeColor();
-            }
+            _that.RenderBtns(_that.currentPage + 1);
         }
         panel.appendChild(btnNextPage);
 
@@ -149,23 +74,34 @@
         btnLastPage.innerHTML = "末页";
         btnLastPage.onclick = function () {
             console.log("末页按下");
-            if (_that.currentPage == _that.totalPage)
-                return;
-            var ele = document.getElementsByClassName("simple-page-control-pageBtns");
-            for (let i = 0; i < ele.length; i++) {
-                ele[i].innerHTML = _that.totalPage - _that.realBtnCnt + i + 1;
-            }
-            _that.currentPage = _that.totalPage;
-            _that.ChangeColor();
-            _that.customClickEvent(_that.currentPage);
+            _that.RenderBtns(_that.totalPage);
         }
         panel.appendChild(btnLastPage);
-    }
 
-    GoToPage(topage) {
-        var _that = this;
-        var ele = document.getElementsByClassName("simple-page-control-pageBtns");
-        var gap = 0;
+        var textBox = document.createElement("input");
+        textBox.type = "text";
+        textBox.className = "simple-page-control-textBox";
+        textBox.id = "goto-page-input";
+        textBox.style.width = "50px";
+        panel.appendChild(textBox);
+
+        var btnGotoPage = document.createElement("button");
+        btnGotoPage.className = "btnGotoPage btn btn-secondary";
+        btnGotoPage.innerHTML = "跳转";
+        btnGotoPage.onclick = function () {
+            console.log("跳转按下");
+            var gotoPage = document.getElementById("goto-page-input").value;
+            _that.RenderBtns(gotoPage);
+        }
+        panel.appendChild(btnGotoPage);
+
+        
+        var textBlock = document.createElement("label");
+        textBlock.className = "simple-page-control-textBlock";
+        textBlock.id = "simple-page-control-textBlock-totalPage";
+        // textBlock.style.width = "50px";
+        textBlock.innerHTML = "共" + _that.totalPage + "页";
+        panel.appendChild(textBlock);
     }
 
     ChangeColor() {
@@ -176,7 +112,97 @@
             if (parseInt(ele[i].innerHTML) == _that.currentPage)
                 ele[i].style.background = "pink";
             else
-                ele[i].style.background = "white";
+                ele[i].style.background = "grey";
         }
+    }
+
+    /**
+     * This method is generally used to update the page buttons' number and color and invoke the custom click event
+     * **/
+    RenderBtns(gotoPage) {
+        var _that = this;
+        if (_that.currentPage == gotoPage) {
+            _that.ChangeColor();
+            return;
+        }
+        if (gotoPage > _that.totalPage) {
+            gotoPage = _that.totalPage;
+        }
+        if (gotoPage < 1) {
+            gotoPage = 1;
+        }
+        
+        if (gotoPage == 1) {
+            for (let i = 0; i < _that.realBtnCnt; i++) {
+                _that.pageBtns[i].innerHTML = i + 1;
+            }
+        } else if (gotoPage == _that.totalPage) {
+            for (let i = 0; i < _that.realBtnCnt; i++) {
+                _that.pageBtns[i].innerHTML = _that.totalPage - _that.realBtnCnt + i + 1;
+            }
+        }
+        else {
+            if (gotoPage >= firstPageBtnNum && gotoPage <= lastPageBtnNum) {
+                console.log("gotopage is already in the current page buttons");
+                var currentPageNum = parseInt(gotoPage);
+                var middlePageNum = parseInt(_that.pageBtns[Math.floor(_that.realBtnCnt / 2)].innerHTML);
+                var firstPageBtnNum = parseInt(_that.pageBtns[0].innerHTML);
+                var lastPageBtnNum = parseInt(_that.pageBtns[_that.realBtnCnt - 1].innerHTML);
+                var gap = Math.abs(parseInt(this.innerHTML) - parseInt(_that.pageBtns[Math.floor(_that.realBtnCnt / 2)].innerHTML));
+                var gapRight = parseInt(_that.totalPage) - parseInt(_that.pageBtns[_that.realBtnCnt - 1].innerHTML);
+                var gapLeft = parseInt(_that.pageBtns[0].innerHTML) - 1;
+                if (currentPageNum < middlePageNum) {// move to right
+                    // if there is no need to change the page buttons' number, just change the color and invoke the custom click event
+                    if (firstPageBtnNum != 1) {
+                        if (gap <= gapLeft) {
+                            for (let i = 0; i < _that.pageBtns.length; i++) {
+                                _that.pageBtns[i].innerHTML = parseInt(_that.pageBtns[i].innerHTML - gap);
+                            }
+                        }
+                        else {
+                            for (let i = 0; i < _that.pageBtns.length; i++) {
+                                _that.pageBtns[i].innerHTML = i + 1;
+                            }
+                        }
+                    }
+                }
+                if (currentPageNum > middlePageNum)// move to left
+                {
+                    if (lastPageBtnNum != _that.totalPage) {
+                        if (gap <= gapRight) {
+                            for (let i = 0; i < _that.pageBtns.length; i++) {
+                                _that.pageBtns[i].innerHTML = gap + parseInt(_that.pageBtns[i].innerHTML);
+                            }
+                        } else {
+                            for (let i = 0; i < _that.realBtnCnt; i++) {
+                                _that.pageBtns[i].innerHTML = _that.totalPage - _that.realBtnCnt + i + 1;
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                if (gotoPage < Math.ceil(_that.realBtnCnt / 2)) {
+                    console.log("show the first " + _that.realBtnCnt + " pages");
+                    for (let i = 0; i < _that.realBtnCnt; i++) {
+                        _that.pageBtns[i].innerHTML = i + 1;
+                    }
+                } else if (gotoPage > _that.totalPage - Math.floor(_that.realBtnCnt / 2)) {
+                    console.log("show the last " + _that.realBtnCnt + " pages");
+                    for (let i = 0; i < _that.realBtnCnt; i++) {
+                        _that.pageBtns[i].innerHTML = _that.totalPage - _that.realBtnCnt + i + 1;
+                    }
+                } else {
+                    console.log("gotopage is placed in the middle");
+                    for (let i = 0; i < _that.realBtnCnt; i++) {
+                        _that.pageBtns[i].innerHTML = gotoPage - Math.floor(_that.realBtnCnt / 2) + i;
+                    }
+                }
+            }
+        }
+
+        _that.currentPage = gotoPage;
+        _that.ChangeColor();
+        _that.customClickEvent(_that.currentPage);
     }
 }
