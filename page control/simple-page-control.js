@@ -96,12 +96,10 @@
         panel.appendChild(btnGotoPage);
 
         
-        var textBlock = document.createElement("label");
-        textBlock.className = "simple-page-control-textBlock";
-        textBlock.id = "simple-page-control-textBlock-totalPage";
-        // textBlock.style.width = "50px";
-        textBlock.innerHTML = "共" + _that.totalPage + "页";
-        panel.appendChild(textBlock);
+        var totalPageBtn = document.createElement("button");
+        totalPageBtn.className = "btnGotoPage btn btn-secondary";
+        totalPageBtn.innerHTML = "共" + _that.totalPage + "页";
+        panel.appendChild(totalPageBtn);
     }
 
     ChangeColor() {
@@ -131,7 +129,7 @@
         if (gotoPage < 1) {
             gotoPage = 1;
         }
-        
+
         if (gotoPage == 1) {
             for (let i = 0; i < _that.realBtnCnt; i++) {
                 _that.pageBtns[i].innerHTML = i + 1;
