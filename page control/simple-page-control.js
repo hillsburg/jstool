@@ -1,4 +1,19 @@
-﻿class SimplePageControl {
+﻿/**
+ * This is a simple page control component, which is used to control the page buttons' number and color and invoke the custom click event.
+ * The custom click event must contain a parameter, which is the page number.
+ * The page control component contains the following buttons:
+ * 1. First page button
+ * 2. Previous page button
+ * 3. Page buttons
+ * 4. Next page button
+ * 5. Last page button
+ * 6. Text box for inputting the page number
+ * 7. Goto page button
+ * 8. Total page button
+ * Author: hillsburg@qq.com
+ * Github:https://github.com/hillsburg/jstool
+ */
+class SimplePageControl {
     static realBtnCnt = 5;
     static currentPage = 1;
     static totalPage = 5;
